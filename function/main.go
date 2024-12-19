@@ -11,7 +11,7 @@ type Artist struct {
     ID             int                 `json:"id"`
     Name           string              `json:"name"`
     Image          string              `json:"image"`
-    Biography      string              `json:"biography"`  // Ajout de la biographie
+    Biography      string              `json:"biography"`
     DatesLocations map[string][]string `json:"datesLocations"`
 }
 
@@ -51,7 +51,7 @@ var artists = []Artist{
         ID:    4,
         Name:  "Hamza",
         Image: "/static/images/hamza.jpg",
-        Biography: "",
+        Biography: "Hamza est un rappeur belge d'origine marocaine, reconnu pour son style unique mêlant rap, trap et influences R&B. Il se distingue par ses flows mélodieux et ses productions soignées, souvent introspectives, mais aussi festives. Avec des albums comme *Paradise* et des collaborations avec des artistes majeurs, Hamza a su s'imposer comme une figure incontournable de la scène musicale francophone, alliant sensualité et énergie brute dans ses morceaux.",
         DatesLocations: map[string][]string{
             "Le dome MARSEILLE": {"2025-01-9"},
             "Halle Tony Garnier LYON":  {"2025-01-10"},
@@ -61,7 +61,7 @@ var artists = []Artist{
         ID:    4,
         Name:  "maes",
         Image: "/static/images/hamza.jpg",
-        Biography: "",
+        Biography: "Maes est un rappeur d'origine marocaine qui a su s'imposer grâce à son flow unique et sa manière de raconter ses histoires. Entre influences urbaines et réalités de la rue, il s'est rapidement fait un nom avec ses albums puissants et ses clips impressionnants.",
         DatesLocations: map[string][]string{
             "Le dome MARSEILLE": {"2025-01-9"},
             "Halle Tony Garnier LYON":  {"2025-01-10"},
