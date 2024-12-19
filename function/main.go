@@ -4,7 +4,7 @@ import (
     "encoding/json"
     "html/template"
     "net/http"
-    "strconv" // Importer le package strconv pour la conversion de int en string
+    "strconv"
 )
 
 type Artist struct {
@@ -51,7 +51,17 @@ var artists = []Artist{
         ID:    4,
         Name:  "Hamza",
         Image: "/static/images/hamza.jpg",
-        Biography: "Gazo est le pionnier du drill en France. Son style brut et percutant fait de lui une figure montante dans le rap français. Avec des morceaux puissants et des textes sans concession, il a su se forger une place à part dans la scène musicale urbaine.",
+        Biography: "",
+        DatesLocations: map[string][]string{
+            "Le dome MARSEILLE": {"2025-01-9"},
+            "Halle Tony Garnier LYON":  {"2025-01-10"},
+        },
+    },
+    {
+        ID:    4,
+        Name:  "maes",
+        Image: "/static/images/hamza.jpg",
+        Biography: "",
         DatesLocations: map[string][]string{
             "Le dome MARSEILLE": {"2025-01-9"},
             "Halle Tony Garnier LYON":  {"2025-01-10"},
