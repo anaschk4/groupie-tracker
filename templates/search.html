@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche - Groupie Platform</title>
+    <style>
+        /* Variables et couleurs */
+        :root {
+            --gradient-1: linear-gradient(90deg, #FF6B6B, #4ECDC4);
+            --gradient-2: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59);
+            --color-bg: #0f0f0f;
+            --color-card: #1a1a1a;
+            --color-text: #ffffff;
+            --color-accent: #4ECDC4;
+            --shadow-neon: 0 0 15px rgba(78, 205, 196, 0.3);
+        }
+
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--color-bg);
+            color: var(--color-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient-1);
+            padding: 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 300px;
+            flex-direction: column;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0,0,0,0.3);
+            margin-bottom: 2rem;
+        }
+
+        /* Formulaire de recherche */
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--color-accent);
+            border-radius: 25px;
+            background: var(--color-card);
+            color: var(--color-text);
+            outline: none;
+        }
+
+        .search-button {
+            padding: 1rem 2rem;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-button:hover {
+            background: #FF6B6B;
+        }
+
+        /* Section des résultats */
+        .results-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .artist-card {
+            background: var(--color-card);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-neon);
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .artist-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .artist-info {
+            color: var(--color-text);
+        }
+
+        .artist-name {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .info-section {
+            margin-bottom: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .info-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .info-list li {
+            background: rgba(78, 205, 196, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .relations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .relation-item {
+            background: rgba(78, 205, 196, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .relation-item h4 {
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .relation-item ul {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        .basic-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .basic-info p {
+            background: rgba(78, 205, 196, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .artist-card {
+                grid-template-columns: 1fr;
+            }
+
+            .artist-image {
+                height: 200px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .basic-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Recherche d'Artistes</h1>
+        <form class="search-form">
+            <input type="text" id="search-bar" name="query" placeholder="Rechercher un artiste..." class="search-input">
+            <select name="creation-date" id="creation-date" class="search-input">
+                <option value="">Date de création</option>
+                <option value="1990">1990</option>
+                <option value="2000">2000</option>
+                <option value="2010">2010</option>
+            </select>
+            <select name="member-count" id="member-count" class="search-input">
+                <option value="">Nombre de membres</option>
+                <option value="1">1 membre</option>
+                <option value="2">2 membres</option>
+                <option value="3+">3 membres ou plus</option>
+            </select>
+            <button type="button" class="search-button" onclick="performSearch()">Rechercher</button>
+        </form>
+    </header>
+
+    <main class="results-container" id="results-container">
+        <!-- Les résultats en direct s’afficheront ici -->
+    </main>    
+        {{range .Results}}
+        <div class="artist-card">
+            <img src="{{.Image}}" alt="{{.Name}}" class="artist-image">
+            
+            <div class="artist-info">
+                <h2 class="artist-name">{{.Name}}</h2>
+
+                <div class="basic-info">
+                    <p><strong>Date de création:</strong> {{.CreationDate}}</p>
+                    <p><strong>Premier album:</strong> {{.FirstAlbum}}</p>
+                </div>
+
+                <div class="info-section">
+                    <h3>Membres</h3>
+                    <ul class="info-list">
+                        {{range .Members}}
+                        <li>{{.}}</li>
+                        {{end}}
+                    </ul>
+                </div>
+                <div class="info-section">
+                    <h3>Dates et Lieux</h3>
+                    <div class="relations-grid">
+                        {{range $location, $dates := .DatesLocations}}
+                        <div class="relation-item">
+                            <h4>{{$location}}</h4>
+                            <ul>
+                                {{range $dates}}
+                                <li>{{.}}</li>
+                                {{end}}
+                            </ul>
+                        </div>
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="artist-card">
+            <p>Aucun résultat trouvé pour "{{.Query}}"</p>
+        </div>
+        {{end}}
+    </main>
+    
+    <script>
+        // Récupérer les éléments HTML
+        const searchBar = document.getElementById('search-bar');
+        const creationDate = document.getElementById('creation-date');
+        const memberCount = document.getElementById('member-count');
+        const resultsContainer = document.getElementById('results-container');
+    
+        // Fonction pour effectuer la recherche
+        function performSearch() {
+            const query = searchBar.value.trim();
+            const creationDateValue = creationDate.value;
+            const memberCountValue = memberCount.value;
+
+            if (query.length === 0 && creationDateValue === "" && memberCountValue === "") {
+                resultsContainer.innerHTML = ""; // Efface les résultats si rien n'est tapé
+                return;
+            }
+
+            const params = new URLSearchParams({
+                query: query,
+                creationDate: creationDateValue,
+                memberCount: memberCountValue
+            });
+
+            fetch(`/search?${params.toString()}`)
+                .then(response => response.json())
+                .then(data => {
+                    renderResults(data);
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la recherche :', error);
+                    resultsContainer.innerHTML = "<p>Une erreur est survenue.</p>";
+                });
+        }
+
+        // Fonction pour afficher les résultats dynamiques
+        function renderResults(results) {
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `<p>Aucun résultat trouvé pour "${searchBar.value}"</p>`;
+                return;
+            }
+
+            // Générer les cartes HTML pour chaque artiste
+            resultsContainer.innerHTML = results.map(artist => `
+                <div class="artist-card">
+                    <img src="${artist.Image}" alt="${artist.Name}" class="artist-image">
+                    <div class="artist-info">
+                        <h2 class="artist-name">${artist.Name}</h2>
+                        <div class="basic-info">
+                            <p><strong>Date de création:</strong> ${artist.CreationDate}</p>
+                            <p><strong>Premier album:</strong> ${artist.FirstAlbum}</p>
+                        </div>
+                        <div class="info-section">
+                            <h3>Membres</h3>
+                            <ul class="info-list">
+                                ${artist.Members.map(member => `<li>${member}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="info-section">
+                            <h3>Dates et Lieux</h3>
+                            <div class="relations-grid">
+                                ${Object.entries(artist.DatesLocations).map(([location, dates]) => `
+                                    <div class="relation-item">
+                                        <h4>${location}</h4>
+                                        <ul>
+                                            ${dates.map(date => `<li>${date}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
