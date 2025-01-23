@@ -58,8 +58,8 @@ func main() {
     http.HandleFunc("/search", handleSearch)
     http.HandleFunc("/map", handleMap)
     http.HandleFunc("/profil", handleProfil)
-    log.Println("Serveur démarré sur http://localhost:3030")
-    log.Fatal(http.ListenAndServe(":3030", nil))
+    log.Println("Serveur démarré sur http://localhost:8080")
+    log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
