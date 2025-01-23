@@ -33,4 +33,4 @@ Groupie Tracker est une application web permettant de rechercher des artistes, l
 
 ## Auteurs
 
-Anas Chakir, Kenzi Bendjelloul
+Anas Chakir, Kenzi Bendjelloul.
