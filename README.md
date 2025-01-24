@@ -20,6 +20,7 @@ Groupie Tracker est une application web permettant de rechercher des artistes, l
 1. Clonez ce dépôt sur votre machine locale :
     
     git clone https://github.com/anaschk4/groupie-tracker.git
+
     
 2. Allez dans le répertoire du projet :
     

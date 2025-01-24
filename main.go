@@ -156,12 +156,11 @@ func searchArtists(query, creationDate, firstAlbum, memberCount string) ([]Artis
     for _, artist := range artists {
         creationDateStr := strconv.Itoa(artist.CreationDate)
 
-        // Application des filtres
         if (query == "" || strings.Contains(strings.ToLower(artist.Name), query)) &&
             (creationDate == "" || creationDate == creationDateStr) &&
             (firstAlbum == "" || strings.Contains(strings.ToLower(artist.FirstAlbum), strings.ToLower(firstAlbum))) {
 
-            // Filtrage par nombre de membres
+          
             if memberCount != "" {
                 switch memberCount {
                 case "1":
@@ -178,7 +177,7 @@ func searchArtists(query, creationDate, firstAlbum, memberCount string) ([]Artis
                     }
                 }
             }
-            // Filtrage par nombre de membres
+
             if firstAlbum != "" {
                 switch firstAlbum {
                 case "1990":
