@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://cdn.lordicon.com//libs/frhvbuzj/lord-icon-2.0.2.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title>Lieux des prochains concerts !</title>
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        /* Header et Navigation */
+        header {
+            background-color: #2d2d2d;
+            padding: 1rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .logomap {
+            height: 50px;
+            margin-right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .logomap:hover {
+            transform: scale(1.1);
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .menu li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .menu li:hover {
+            transform: translateY(-3px);
+        }
+
+        .menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #08a88a;
+            transition: width 0.3s ease;
+        }
+
+        .menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Contenu principal */
+        .content {
+            padding-top: 100px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #08a88a;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .content p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Zone de carte */
+        .contact-in {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            background-color: #2d2d2d;
+            border-radius: 15px;
+            margin: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-map {
+            width: 100%;
+            height: 600px;
+            border-radius: 10px;
+            overflow: hidden;
+            animation: slideIn 1s ease;
+        }
+
+        .city-image-container {
+            background-color: #2d2d2d;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .city-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .city-info {
+            color: white;
+            text-align: center;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .contact-in {
+                grid-template-columns: 1fr;
+            }
+
+            .menu ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .searchBox {
+                width: 90%;
+            }
+
+            .contact-map {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <lord-icon src="https://cdn.lordicon.com//gmzxduhd.json" trigger="loop" delay="1000" colors="primary:#ffffff,secondary:#08a88a" style="width:32px;height:32px"></lord-icon><a href="/">Accueil</a>
+                    </li>
+                    <li>
+                        <lord-icon src="https://cdn.lordicon.com//msoeawqm.json" trigger="loop" delay="1000" colors="primary:#ffffff,secondary:#08a88a" style="width:30px;height:30px"></lord-icon><a href="/search">Rechercher un artiste</a>
+                    </li>
+                    <li>
+                        <lord-icon src="https://cdn.lordicon.com//zzcjjxew.json" trigger="loop" delay="1000" colors="primary:#ffffff,secondary:#08a88a" style="width:32px;height:32px"></lord-icon><a href="/map">Prochain concert</a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="content">
+            <h1>Les lieux des prochains concerts !</h1>
+            <p>Les prochains concerts autour du monde...</p>
+        </div>
+
+        <div class="contact-in">
+            <div class="contact-map">
+                <div id="map"></div>
+            </div>
+            <div class="city-image-container">
+                <!-- Le contenu sera ajouté dynamiquement -->
+            </div>
+        </div>
+
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script>
+            var map = L.map('map').setView([48.8566, 2.3522], 2); 
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            var locations = [
+                {
+                    name: "Paris",
+                    lat: 48.8566,
+                    lng: 2.3522,
+                    image: "https://images.pexels.com/photos/699466/pexels-photo-699466.jpeg",
+                    description: "La ville lumière",
+                    concerts: [
+                        { date: "15/03/2025", artist: "Daft Punk", venue: "Accor Arena" },
+                        { date: "22/03/2025", artist: "Justice", venue: "Zénith de Paris" },
+                        { date: "05/04/2025", artist: "The Weeknd", venue: "Stade de France" }
+                    ]
+                },
+                {
+                    name: "Londres",
+                    lat: 51.5074,
+                    lng: -0.1278,
+                    image: "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg",
+                    description: "La capitale britannique",
+                    concerts: [
+                        { date: "18/03/2025", artist: "Arctic Monkeys", venue: "O2 Arena" },
+                        { date: "25/03/2025", artist: "Adele", venue: "Wembley Stadium" }
+                    ]
+                },
+                {
+                    name: "Tokyo",
+                    lat: 35.6762,
+                    lng: 139.6503,
+                    image: "https://blog.sakura.co/wp-content/uploads/2023/01/sakuraco_nakamise-dori.png",
+                    description: "La mégalopole japonaise",
+                    concerts: [
+                        { date: "20/03/2025", artist: "BABYMETAL", venue: "Tokyo Dome" },
+                        { date: "27/03/2025", artist: "ONE OK ROCK", venue: "Saitama Super Arena" }
+                    ]
+                },
+                {
+                    name: "New York",
+                    lat: 40.7128,
+                    lng: -74.0060,
+                    image: "https://images.pexels.com/photos/313782/pexels-photo-313782.jpeg",
+                    description: "La ville qui ne dort jamais",
+                    concerts: [
+                        { date: "12/03/2025", artist: "Lady Gaga", venue: "Madison Square Garden" },
+                        { date: "19/03/2025", artist: "The Strokes", venue: "Barclays Center" },
+                        { date: "26/03/2025", artist: "Beyoncé", venue: "MetLife Stadium" }
+                    ]
+                },
+                {
+                    name: "Berlin",
+                    lat: 52.52,
+                    lng: 13.405,
+                    image: "https://images.pexels.com/photos/109629/pexels-photo-109629.jpeg",
+                    description: "La capitale culturelle allemande",
+                    concerts: [
+                        { date: "14/03/2025", artist: "Rammstein", venue: "Olympiastadion" },
+                        { date: "21/03/2025", artist: "Paul Kalkbrenner", venue: "Mercedes-Benz Arena" }
+                    ]
+                }
+            ];
+
+            function updateCityImage(location) {
+                const container = document.querySelector('.city-image-container');
+                container.innerHTML = `
+                    <img src="${location.image}" alt="${location.name}" class="city-image">
+                    <div class="city-info">
+                        <h2>${location.name}</h2>
+                        <p>${location.description}</p>
+                    </div>
+                `;
+            }
+
+            locations.forEach(function(location) {
+                var popupContent = "<b>" + location.name + "</b><br><br>";
+                location.concerts.forEach(function(concert) {
+                    popupContent += "<b>" + concert.date + "</b><br>";
+                    popupContent += concert.artist + "<br>";
+                    popupContent += concert.venue + "<br><br>";
+                });
+
+                L.marker([location.lat, location.lng])
+                    .addTo(map)
+                    .bindPopup(popupContent)
+                    .on('click', function() {
+                        updateCityImage(location);
+                    });
+            });
+
+            // Afficher Paris par défaut
+            updateCityImage(locations[0]);
+        </script>
+    </div>
+</body>
+</html>

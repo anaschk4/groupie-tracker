@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - Groupie Tracker</title>
+    <style>
+        :root {
+            --primary-color: #4ECDC4;
+            --dark-bg: #121212;
+            --card-bg: #181818;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Circular', Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+        }
+
+        .profile-picture {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-type {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-name {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-item {
+            font-size: 0.875rem;
+        }
+
+        .stat-value {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 500px;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-primary);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--text-primary);
+            background: transparent;
+            color: var(--text-primary);
+        }
+
+        .btn:hover {
+            transform: scale(1.04);
+            opacity: 0.9;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .artist-card {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .artist-card:hover {
+            background-color: #282828;
+        }
+
+        .artist-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .artist-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .artist-followers {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .recent-activity {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-picture {
+                width: 150px;
+                height: 150px;
+            }
+
+            .profile-name {
+                font-size: 2.5rem;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+
+            .profile-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="Photo de profil" class="profile-picture">
+            <div class="profile-info">
+                <div class="profile-type">Profil</div>
+                <h1 class="profile-name">Kenzi Bendjeboul</h1>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">80</span> Abonnements
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">5</span> Abonnés
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">5</span> Artistes favoris
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn btn-primary">Modifier le profil</button>
+                    <button class="btn btn-outline">Partager</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Tes artistes les plus ecoutés</h2>
+            <div class="artists-grid">
+                <div class="artist-card">
+                    <img src="https://numero.com/wp-content/uploads/2024/09/push-rihanna-dior-beauty.jpg" alt="Artiste 1" class="artist-image">
+                    <div class="artist-name">Rihanna</div>
+                    <div class="artist-followers">50M d'abonnés</div>
+                </div>
+                <div class="artist-card">
+                    <img src="https://cdn-images.dzcdn.net/images/artist/be0a7c550567f4af0ed202d7235b74d6/1900x1900-000000-80-0-0.jpg" alt="Artiste 2" class="artist-image">
+                    <div class="artist-name">Kendrick Lamar</div>
+                    <div class="artist-followers">30M d'abonnés</div>
+                </div>
+                <div class="artist-card">
+                    <img src="https://www.micromania.fr/on/demandware.static/-/Sites-masterCatalog_Micromania/default/dw2cdad9d5/images/logos-licences/ac-dc5613.jpg" alt="Artiste 2" class="artist-image">
+                    <div class="artist-name">ACDC</div>
+                    <div class="artist-followers">15M d'abonnés</div>
+                </div>
+                <div class="artist-card">
+                    <img src="https://cdn-s-www.lalsace.fr/images/4289A9C3-326A-4481-9F2C-06E370FEE18A/NW_raw/les-rolling-stones-en-1973-mick-jagger-charlie-watts-keith-richards-bill-wyman-et-mick-taylor-photo-a-ubrey-powell-1598289985.jpg" alt="Artiste 2" class="artist-image">
+                    <div class="artist-name">Rolling Stones</div>
+                    <div class="artist-followers">20M d'abonnés</div>
+                </div>
+                <div class="artist-card">
+                    <img src="https://www.billboard.com/wp-content/uploads/media/katy-perry-roar-video-650-430.jpg?w=650" alt="Artiste 2" class="artist-image">
+                    <div class="artist-name">Katty Perry</div>
+                    <div class="artist-followers">30M d'abonnés</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Activité récente</h2>
+            <div class="recent-activity">
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <!-- Icône -->
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-text">Nouvel album ajouté à vos favoris</div>
+                        <div class="activity-time">Il y a 3 jours</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
